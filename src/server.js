@@ -2,7 +2,7 @@
 import express from 'express';
 const server = express();
  
-import routerPayment from './routes/payment.routes.js';
+import routerPayment from './routes/payments.routes.js';
 
 server.use(express.json());
 server.use("/api",routerPayment);
@@ -14,14 +14,14 @@ server.get("/",(req,res)=>{
 });
 
 server.post("/",(req,res)=>{
-    res.send("post" + new Date());
+    res.send("POST" + new Date());
 });
 
 server.patch("/",(req,res)=>{
-    res.send("patch" + new Date());
+    res.send("PATCH" + new Date());
 });
 server.delete("/",(req,res)=>{
-    res.send("delete " + new Date());
+    res.send("DELETE" + new Date());
 });
 
 server.listen(PORT,()=>{

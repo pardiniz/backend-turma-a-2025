@@ -1,7 +1,9 @@
-import express from 'express';
-const router = express.Router(); 
-import PaymentController from '../controllers/payment.controller.js';
+import { Router } from 'express';
 
-router.post('/payment', PaymentController.createPayment);
+const router = Router();
+
+router.get('/payments', (req, res) => {
+    res.send('Payments route');
+});
 
 export default router;
