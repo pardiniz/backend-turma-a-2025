@@ -1,11 +1,11 @@
 import {z} from "zod"
 
 const paymentSchema = z.object({
-    nome: z.string().min(3, {message: "Precisa de no minimo 6"}).max(255),
-   email: z.string().email({message: "Email Invalido"}),
-   senha: z.string().min(6,{message: "Precisa de no minimo 6"}),
-   observacao: z.string().max(255),
-   data: z.date().optional(),
+    data: z.string().datetime(),
+    valor: z.number().positive(),
+    numero: z.number().int().positive(),
+   observacao: z.string().optional(),
+
 });
 
 const PaymentController = {
@@ -26,7 +26,34 @@ const PaymentController = {
          }); }
         res.status(201).json({ message: 'Payment created sucessfuly'});
      }
+   },
+   async updatePayment(req, res) {
+
+      try { 
+
+
+         const {id} = req.params;
+         const {valor, numero, data, observacao} = req.body;
+         PaymentSchema.parse({valor, numero, data, observacao});
+         res.status(200).json({ message: 'Payment updated sucessfuly', 
+                                          data: {id, valor, numero, data, observacao}});
+         
+      } catch (error) {
+
+         if (error instanceof z.ZodError) {
+             res.status(400).json({ message: "Erro validação",
+              details: error.errors}); 
+            
+            
+            
+            }
+         res.status(500).send({ message: 'Internal server error'});
+      }
+
    }
+
 }
+
+
 
 export default PaymentController;
